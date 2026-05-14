@@ -24,6 +24,10 @@ export const useCalculator = () => {
   const [lastAnswer, setLastAnswer] = useState(null);
   const [lastAnswerUnit, setLastAnswerUnit] = useState(null);
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
+
   // wrapper functions to pass dependencies
   const toCelsiusWrapper = useCallback((value, unit) => toCelsius(value, unit), []);
   const fromCelsiusWrapper = useCallback((celsius, unit) => fromCelsius(celsius, unit), []);
@@ -124,6 +128,13 @@ export const useCalculator = () => {
     }
   }, [lastAnswer, lastAnswerUnit, inputValue, displayValue]);
 
+  const toggleTheme = useCallback(() => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }, [theme]);
+
   // keyboard handler
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -153,6 +164,10 @@ export const useCalculator = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [appendToInput, handleCalculate, clearInput, deleteLastChar]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, []);
+
   // mercury calculations
   const sliderPercentage = celsius !== null ? getSliderPercentageFromCelsius(celsius) : 50;
   const mercuryHeight = calculateMercuryHeight(sliderPercentage, MIN_MERCURY, MAX_MERCURY, MAX_MERCURY_HEIGHT);
@@ -166,12 +181,14 @@ export const useCalculator = () => {
     kelvin,
     isValid,
     mercuryHeight,
+    theme,
     // actions
     appendToInput,
     clearInput,
     deleteLastChar,
     toggleSign,
     insertANS,
-    handleCalculate
+    handleCalculate,
+    toggleTheme,
   };
 };

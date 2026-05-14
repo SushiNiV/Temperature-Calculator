@@ -1,5 +1,5 @@
 import './App.css';
-import { BsMoon, BsClockHistory } from 'react-icons/bs';
+import { BsMoon, BsClockHistory, BsSun } from 'react-icons/bs';
 import { useCalculator } from './hooks/useCalculator';
 
 function App() {
@@ -16,28 +16,30 @@ function App() {
     deleteLastChar,
     toggleSign,
     insertANS,
-    handleCalculate
+    handleCalculate,
+    theme,
+    toggleTheme,
   } = useCalculator();
 
   const getMercuryColor = (celsius) => {
-    if (celsius === null) return '#9CA3AF';
+    if (celsius === null) return 'var(--mercury-default)';
     if (celsius <= 0) return '#6B9FD9';
     if (celsius >= 50) return '#D75353';
-    return '#FFFFFF';
+    return 'var(--mercury-default)';
   };
 
-  const getLightBGColor = (celsius) => {
-    if (celsius === null) return '#D1D5DB';
-    if (celsius <= 0) return '#AAC6DC';
-    if (celsius >= 50) return '#D79f93';
+  const getLightBGColor = (celsius, theme) => {
+    if (celsius === null) return theme === 'light' ? '#D1D5DB' : '#a2a9b5';
+    if (celsius <= 0) return theme === 'light' ? '#AAC6DC' : '#1E3A5F';
+    if (celsius >= 50) return theme === 'light' ? '#D79F93' : '#5C2E2E';
     return '#D1D5DB';
   };
 
-  const getButtonColor = (celsius) => {
-    if (celsius === null) return '#9CA3AF';
-    if (celsius <= 0) return '#D9E4ED';
-    if (celsius >= 50) return '#EDEBD9';
-    return '#9CA3AF';
+  const getButtonColor = (celsius, theme) => {
+    if (celsius === null) return 'var(--side-button)';
+    if (celsius <= 0) return theme === 'light' ? '#D9E4ED' : '#4A8BCE';
+    if (celsius >= 50) return theme === 'light' ? '#EDEBD9' : '#C23B3B';
+    return 'var(--side-button)';
   };
 
   return (
@@ -46,35 +48,36 @@ function App() {
         <div className="left-div">
           <div className="thermometer-container">
             <div className="thermometer-glass"
-              style={{ borderColor: getLightBGColor(celsius) }}
+              style={{ borderColor: getLightBGColor(celsius, theme),
+               }}
             >
               <div className="mercury">
                 <div 
                   className="mercury-tube" 
                   style={{
                     height: `${mercuryHeight}px`,
-                    backgroundColor: getMercuryColor(celsius) }}
+                    backgroundColor: getMercuryColor(celsius)
+                  }}
                 ></div>
                 <div
                   className="mercury-bulb"
                   style={{
                     backgroundColor: getMercuryColor(celsius),
-                    borderColor: getLightBGColor(celsius) }}
+                    borderColor: getLightBGColor(celsius, theme)
+                  }}
                 ></div>
               </div>
             </div>
           </div>
-          
+
           <div className="calculator-div"
-             style={{ backgroundColor: getLightBGColor(celsius) }}>
-            <div className="calculator-upper-div"
-              style={{ backgroundColor: getMercuryColor(celsius) }}
-            >
+            style={{ backgroundColor: getLightBGColor((celsius), theme) }}>
+            <div className="calculator-upper-div">
               <div className="calculator-title">
                 <h1>Temperature Calculator</h1>
               </div>
               <div className="calculator-input-screen">
-                <p style={{ color: isValid ? '#000' : '#D75353' }}>
+                <p style={{ color: isValid ? 'var(--text-secondary)' : '#D75353' }}>
                   {displayValue}
                 </p>
               </div>
@@ -97,9 +100,11 @@ function App() {
               <div className="calculator-buttons-grid">
                 <button className="calculator-button c1" onClick={() => appendToInput('.')}><span className="big">.</span></button>  
                 <button className="calculator-button c2" onClick={() => appendToInput('°C')}
-                  style={{ backgroundColor: getButtonColor(celsius) }}>°C</button>
-                <button className="calculator-button c2" onClick={() => appendToInput('°F')} style={{ backgroundColor: getButtonColor(celsius) }}>°F</button>
-                <button className="calculator-button c2" onClick={() => appendToInput('K')} style={{ backgroundColor: getButtonColor(celsius) }}>K</button>
+                  style={{ backgroundColor: getButtonColor(celsius, theme) }}>°C</button>
+                <button className="calculator-button c2" onClick={() => appendToInput('°F')} 
+                  style={{ backgroundColor: getButtonColor(celsius, theme) }}>°F</button>
+                <button className="calculator-button c2" onClick={() => appendToInput('K')} 
+                  style={{ backgroundColor: getButtonColor(celsius, theme) }}>K</button>
                 <button className="calculator-button c1" onClick={toggleSign}><span className="big">+/–</span></button>  
                 <button className="calculator-button c3" onClick={insertANS}>ANS</button>
                 <button className="calculator-button c3" onClick={deleteLastChar}>DEL</button>
@@ -124,9 +129,16 @@ function App() {
           </div>
           <div className="button-div">
             <button className="side-button theme"
-              style={{ backgroundColor: getMercuryColor(celsius) }}> <BsMoon /> </button>
+              onClick={toggleTheme}
+              style={{ backgroundColor: getMercuryColor(celsius) }}
+            > 
+              {theme === 'light' ? <BsMoon /> : <BsSun />}
+            </button>
             <button className="side-button history"
-              style={{ backgroundColor: getMercuryColor(celsius) }}> <BsClockHistory /> </button>
+              style={{ backgroundColor: getMercuryColor(celsius) }}
+            > 
+              <BsClockHistory /> 
+            </button>
           </div>
         </div>
 

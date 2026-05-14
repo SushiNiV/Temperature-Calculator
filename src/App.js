@@ -19,24 +19,57 @@ function App() {
     handleCalculate
   } = useCalculator();
 
+  const getMercuryColor = (celsius) => {
+    if (celsius === null) return '#9CA3AF';
+    if (celsius <= 0) return '#6B9FD9';
+    if (celsius >= 50) return '#D75353';
+    return '#FFFFFF';
+  };
+
+  const getLightBGColor = (celsius) => {
+    if (celsius === null) return '#D1D5DB';
+    if (celsius <= 0) return '#AAC6DC';
+    if (celsius >= 50) return '#D79f93';
+    return '#D1D5DB';
+  };
+
+  const getButtonColor = (celsius) => {
+    if (celsius === null) return '#9CA3AF';
+    if (celsius <= 0) return '#D9E4ED';
+    if (celsius >= 50) return '#EDEBD9';
+    return '#9CA3AF';
+  };
+
   return (
     <div className="background">
       <div className="div-container">
         <div className="left-div">
           <div className="thermometer-container">
-            <div className="thermometer-glass">
+            <div className="thermometer-glass"
+              style={{ borderColor: getLightBGColor(celsius) }}
+            >
               <div className="mercury">
                 <div 
                   className="mercury-tube" 
-                  style={{ height: `${mercuryHeight}px` }}
+                  style={{
+                    height: `${mercuryHeight}px`,
+                    backgroundColor: getMercuryColor(celsius) }}
                 ></div>
-                <div className="mercury-bulb"></div>
+                <div
+                  className="mercury-bulb"
+                  style={{
+                    backgroundColor: getMercuryColor(celsius),
+                    borderColor: getLightBGColor(celsius) }}
+                ></div>
               </div>
             </div>
           </div>
           
-          <div className="calculator-div">
-            <div className="calculator-upper-div">
+          <div className="calculator-div"
+             style={{ backgroundColor: getLightBGColor(celsius) }}>
+            <div className="calculator-upper-div"
+              style={{ backgroundColor: getMercuryColor(celsius) }}
+            >
               <div className="calculator-title">
                 <h1>Temperature Calculator</h1>
               </div>
@@ -63,9 +96,10 @@ function App() {
             <div className="calculator-lower-div">
               <div className="calculator-buttons-grid">
                 <button className="calculator-button c1" onClick={() => appendToInput('.')}><span className="big">.</span></button>  
-                <button className="calculator-button c2" onClick={() => appendToInput('°C')}>°C</button>
-                <button className="calculator-button c2" onClick={() => appendToInput('°F')}>°F</button>
-                <button className="calculator-button c2" onClick={() => appendToInput('K')}>K</button>
+                <button className="calculator-button c2" onClick={() => appendToInput('°C')}
+                  style={{ backgroundColor: getButtonColor(celsius) }}>°C</button>
+                <button className="calculator-button c2" onClick={() => appendToInput('°F')} style={{ backgroundColor: getButtonColor(celsius) }}>°F</button>
+                <button className="calculator-button c2" onClick={() => appendToInput('K')} style={{ backgroundColor: getButtonColor(celsius) }}>K</button>
                 <button className="calculator-button c1" onClick={toggleSign}><span className="big">+/–</span></button>  
                 <button className="calculator-button c3" onClick={insertANS}>ANS</button>
                 <button className="calculator-button c3" onClick={deleteLastChar}>DEL</button>
@@ -89,8 +123,10 @@ function App() {
             </div>
           </div>
           <div className="button-div">
-            <button className="side-button theme"> <BsMoon /> </button>
-            <button className="side-button history"> <BsClockHistory /> </button>
+            <button className="side-button theme"
+              style={{ backgroundColor: getMercuryColor(celsius) }}> <BsMoon /> </button>
+            <button className="side-button history"
+              style={{ backgroundColor: getMercuryColor(celsius) }}> <BsClockHistory /> </button>
           </div>
         </div>
 

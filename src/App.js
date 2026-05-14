@@ -61,41 +61,29 @@ function App() {
               </div>
             </div>
             <div className="calculator-lower-div">
-              <div className="calculator-button-row">
+              <div className="calculator-buttons-grid">
                 <button className="calculator-button c1" onClick={() => appendToInput('.')}><span className="big">.</span></button>  
                 <button className="calculator-button c2" onClick={() => appendToInput('°C')}>°C</button>
                 <button className="calculator-button c2" onClick={() => appendToInput('°F')}>°F</button>
                 <button className="calculator-button c2" onClick={() => appendToInput('K')}>K</button>
-              </div>
-              <div className="calculator-button-row">
                 <button className="calculator-button c1" onClick={toggleSign}><span className="big">+/–</span></button>  
                 <button className="calculator-button c3" onClick={insertANS}>ANS</button>
                 <button className="calculator-button c3" onClick={deleteLastChar}>DEL</button>
                 <button className="calculator-button c3" onClick={clearInput}>CLR</button>
-              </div>
-              <div className="calculator-button-row">
                 <button className="calculator-button c4" onClick={() => appendToInput('7')}>7</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('8')}>8</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('9')}>9</button>
-                <button className="calculator-button c5" onClick={() => appendToInput('÷')}><span className="big">÷</span></button>
-              </div>
-              <div className="calculator-button-row">
+                <button className="calculator-button c5 double" onClick={() => appendToInput('-')}><span className="big">–</span></button>
                 <button className="calculator-button c4" onClick={() => appendToInput('4')}>4</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('5')}>5</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('6')}>6</button>
-                <button className="calculator-button c5" onClick={() => appendToInput('×')}><span className="big">×</span></button>
-              </div>
-              <div className="calculator-button-row">
                 <button className="calculator-button c4" onClick={() => appendToInput('1')}>1</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('2')}>2</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('3')}>3</button>
-                <button className="calculator-button c5" onClick={() => appendToInput('-')}><span className="big">–</span></button>
-              </div>
-              <div className="calculator-button-row">
+                <button className="calculator-button c5 double" onClick={() => appendToInput('+')}><span className="big">+</span></button>
                 <button className="calculator-button c1" onClick={() => appendToInput('(')}>(</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('0')}>0</button>
                 <button className="calculator-button c1" onClick={() => appendToInput(')')}>)</button>
-                <button className="calculator-button c5" onClick={() => appendToInput('+')}><span className="big">+</span></button>
               </div>
               <button className="calculate-button" onClick={handleCalculate}>Calculate</button>
             </div>

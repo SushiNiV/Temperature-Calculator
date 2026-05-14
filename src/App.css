@@ -101,9 +101,9 @@ h1, p, span {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 368px;
+  width: calc(100% - 32px);
   padding: 16px;
-  margin-top: 16px;
+  margin: 16px 16px 0 16px;
   background-color: #9CA3AF;
   border-radius: 10px;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);

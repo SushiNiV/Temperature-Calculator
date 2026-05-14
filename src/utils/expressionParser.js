@@ -18,7 +18,7 @@ export const parseTemperature = (token) => {
   return { value, unit };
 };
 
-// Sanitize input
+// sanitize input
 export const sanitizeInput = (input) => {
   let sanitized = input.replace(/([+\-*/])\1+/g, '$1');
   
@@ -29,8 +29,12 @@ export const sanitizeInput = (input) => {
   return { valid: true, sanitized };
 };
 
-// Evaluate mathematical expression with temperatures
+// evaluate mathematical expression with temperatures
 export const evaluateExpression = (expression, toCelsiusFn, fromCelsiusFn) => {
+  if (expression.includes('*') || expression.includes('/') || expression.includes('×') || expression.includes('÷')) {
+    return { valid: false, error: "Multiplication and division are not supported. Use + or - only." };
+  }
+  
   const invalidPattern = /\d+°[CFK]\s*\d+°[CFK]/i;
   if (invalidPattern.test(expression)) {
     return { valid: false, error: "Invalid format: Numbers must be separated by operators" };

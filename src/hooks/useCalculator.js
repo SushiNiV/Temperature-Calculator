@@ -127,7 +127,7 @@ export const useCalculator = () => {
   // keyboard handler
   useEffect(() => {
     const handleKeyPress = (e) => {
-      const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '+', '*', '/', '(', ')'];
+      const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '+', '(', ')'];
       const unitKeys = ['c', 'C', 'f', 'F', 'k', 'K'];
       
       if (allowedKeys.includes(e.key)) {

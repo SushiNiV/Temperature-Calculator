@@ -27,6 +27,8 @@ export const useCalculator = () => {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
+  const [history, setHistory] = useState([]);
+  const [shouldReplace, setShouldReplace] = useState(false);
 
   // wrapper functions to pass dependencies
   const toCelsiusWrapper = useCallback((value, unit) => toCelsius(value, unit), []);
@@ -48,6 +50,7 @@ export const useCalculator = () => {
       setCelsius(null);
       setFahrenheit(null);
       setKelvin(null);
+      setShouldReplace(true); 
       return;
     }
     
@@ -61,8 +64,10 @@ export const useCalculator = () => {
     
     setLastAnswer(parsed.value);
     setLastAnswerUnit(parsed.unit);
+    addToHistory(input, parsed.value, parsed.unit);
     
     setDisplayValue(input);
+    setShouldReplace(true);
   }, [toCelsiusWrapper, fromCelsiusWrapper, parseTemperatureWrapper, sanitizeInputWrapper, evaluateExpressionWrapper]);
 
   const handleCalculate = useCallback(() => {
@@ -75,11 +80,19 @@ export const useCalculator = () => {
   }, [inputValue, handleInput]);
 
   const appendToInput = useCallback((value) => {
-    let newInput = inputValue + value;
-    setInputValue(newInput);
-    setDisplayValue(newInput);
-    setIsValid(true);
-  }, [inputValue]);
+    let newInput;
+  
+  if (shouldReplace) {
+    newInput = value;
+    setShouldReplace(false);
+  } else {
+    newInput = inputValue + value;
+  }
+  
+  setInputValue(newInput);
+  setDisplayValue(newInput);
+  setIsValid(true);
+}, [inputValue, shouldReplace]);
 
   const clearInput = useCallback(() => {
     setInputValue('');
@@ -88,6 +101,7 @@ export const useCalculator = () => {
     setFahrenheit(null);
     setKelvin(null);
     setIsValid(true);
+    setShouldReplace(false);  
   }, []);
 
   const deleteLastChar = useCallback(() => {
@@ -114,7 +128,15 @@ export const useCalculator = () => {
   const insertANS = useCallback(() => {
     if (lastAnswer !== null && lastAnswerUnit !== null) {
       const ansString = `${lastAnswer}°${lastAnswerUnit}`;
-      const newInput = inputValue + ansString;
+      let newInput;
+      
+      if (shouldReplace) {
+        newInput = ansString;
+        setShouldReplace(false);
+      } else {
+        newInput = inputValue + ansString;
+      }
+      
       setInputValue(newInput);
       setDisplayValue(newInput);
     } else {
@@ -126,7 +148,22 @@ export const useCalculator = () => {
         setIsValid(true);
       }, 1500);
     }
-  }, [lastAnswer, lastAnswerUnit, inputValue, displayValue]);
+  }, [lastAnswer, lastAnswerUnit, inputValue, displayValue, shouldReplace]);
+
+  const addToHistory = useCallback((input, result, unit) => {
+    const historyEntry = {
+      id: Date.now(),
+      input: input,
+      result: `${result.toFixed(2)}°${unit}`,
+      timestamp: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString()
+    };
+    setHistory(prev => [historyEntry, ...prev].slice(0, 20));
+  }, []);
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+  }, []);
 
   const toggleTheme = useCallback(() => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -182,6 +219,8 @@ export const useCalculator = () => {
     isValid,
     mercuryHeight,
     theme,
+    history,
+    shouldReplace,
     // actions
     appendToInput,
     clearInput,
@@ -190,5 +229,8 @@ export const useCalculator = () => {
     insertANS,
     handleCalculate,
     toggleTheme,
+    clearHistory,
+    addToHistory,
+    handleInput, 
   };
 };

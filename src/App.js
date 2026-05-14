@@ -1,5 +1,5 @@
 import './App.css';
-import { BsMoon, BsClockHistory, BsSun } from 'react-icons/bs';
+import { BsMoon, BsClockHistory, BsSun, BsTrash } from 'react-icons/bs';
 import { useCalculator } from './hooks/useCalculator';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
     kelvin,
     isValid,
     mercuryHeight,
+    shouldReplace,
     appendToInput,
     clearInput,
     deleteLastChar,
@@ -19,32 +20,51 @@ function App() {
     handleCalculate,
     theme,
     toggleTheme,
+    history,
+    clearHistory,
+    handleInput,
   } = useCalculator();
 
   const getMercuryColor = (celsius) => {
     if (celsius === null) return 'var(--mercury-default)';
-    if (celsius <= 0) return '#6B9FD9';
+    if (celsius <= 25) return '#6B9FD9';
     if (celsius >= 50) return '#D75353';
     return 'var(--mercury-default)';
   };
 
   const getLightBGColor = (celsius, theme) => {
     if (celsius === null) return theme === 'light' ? '#D1D5DB' : '#a2a9b5';
-    if (celsius <= 0) return theme === 'light' ? '#AAC6DC' : '#1E3A5F';
+    if (celsius <= 25) return theme === 'light' ? '#AAC6DC' : '#1E3A5F';
     if (celsius >= 50) return theme === 'light' ? '#D79F93' : '#5C2E2E';
     return '#D1D5DB';
   };
 
   const getButtonColor = (celsius, theme) => {
     if (celsius === null) return 'var(--side-button)';
-    if (celsius <= 0) return theme === 'light' ? '#D9E4ED' : '#4A8BCE';
+    if (celsius <= 25) return theme === 'light' ? '#D9E4ED' : '#4A8BCE';
     if (celsius >= 50) return theme === 'light' ? '#EDEBD9' : '#C23B3B';
     return 'var(--side-button)';
   };
 
+  const getBgColor = (celsius, theme) => {
+    if (celsius === null) return theme === 'light' ? '#fefefe' : '#1b1b1c';
+    if (celsius <= 25) return theme === 'light' ? '#E8F0FE' : '#171f30';
+    if (celsius >= 50) return theme === 'light' ? '#FEE8E8' : '#311b1b';
+    return theme === 'light' ? '#fefefe' : '#1b1b1c';
+  };
+
+  const getSideBgColor = (celsius, theme) => {
+    if (celsius === null) return theme === 'light' ? '#D1D5DB' : '#000000';
+    if (celsius <= 25) return theme === 'light' ? '#B0D4E8' : '#040c15';
+    if (celsius >= 50) return theme === 'light' ? '#E8B0B0' : '#1d0b0b';
+    return theme === 'light' ? '#D1D5DB' : '#000000';
+  };
+
   return (
     <div className="background">
-      <div className="div-container">
+      <div className="div-container"
+        style={{ backgroundColor: getBgColor(celsius, theme) }}
+      >
         <div className="left-div">
           <div className="thermometer-container">
             <div className="thermometer-glass"
@@ -130,7 +150,7 @@ function App() {
           <div className="button-div">
             <button className="side-button theme"
               onClick={toggleTheme}
-              style={{ backgroundColor: getMercuryColor(celsius) }}
+              style={{ backgroundColor: getMercuryColor(celsius, theme) }}
             > 
               {theme === 'light' ? <BsMoon /> : <BsSun />}
             </button>
@@ -142,11 +162,46 @@ function App() {
           </div>
         </div>
 
-        <div className="right-div">
-          <div className="inner-right-div">
-            {/* History will go here later */}
-          </div>
+        <div className="right-div"
+  style={{ backgroundColor: getSideBgColor(celsius, theme) }}>
+  <div className="history-container">
+    <div className="history-header">
+      <h3>History</h3>
+      <button 
+        className="history-clear-btn"
+        onClick={clearHistory}
+        title="Clear all history"
+      >
+        <BsTrash /> Clear All
+      </button>
+    </div>
+    
+    <div className="history-list">
+      {history.length === 0 ? (
+        <div className="history-empty">
+          <p>No calculations yet</p>
+          <p className="history-empty-sub">Enter a temperature and click Calculate</p>
         </div>
+      ) : (
+        history.map((item) => (
+          <div 
+            key={item.id} 
+            className="history-item"
+            style={{ backgroundColor: getBgColor(celsius, theme) }}
+            onClick={() => handleInput(item.input)}
+          >
+            <div className="history-input">{item.input}</div>
+            <div className="history-result">= {item.result}</div>
+            <div className="history-time">
+              <span>{item.date}</span>
+              <span>{item.timestamp}</span>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );

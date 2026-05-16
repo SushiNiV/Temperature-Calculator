@@ -87,7 +87,7 @@ h1, p, span {
   justify-content: center;
   align-items: flex-start;
   height: 640px;
-  width: 200px;
+  width: fit-content;
   padding: 5px;
 }
 
@@ -135,11 +135,11 @@ h1, p, span {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 640px;
+  height: 650px;
   width: 400px;
-  min-height: 640px;
-  min-width: 340px;
-  max-height: 640px;
+  min-height: 650px;
+  min-width: 400px;
+  max-height: 650px;
   max-width: 400px;
   background-color: var(--bg-calculator);
   border-radius: 16px;
@@ -348,7 +348,7 @@ h1, p, span {
   align-items: flex-start;
   gap: 12px;
   height: 640px;
-  width: 100px;
+  width: fit-content;
 }
 
 .side-button {
@@ -384,20 +384,32 @@ h1, p, span {
   min-width: 0;
   background-color: var(--bg-right);
   color: var(--text-primary);
+  animation: slideIn 0.3s ease-out;
 }
 
-.right-div {
-  animation: slideIn 0.3s ease-out;
+.right-div.closing {
+  animation: slideOut 0.3s ease-out forwards;
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }
 
@@ -534,4 +546,195 @@ h1, p, span {
 
 .history-list::-webkit-scrollbar-thumb:hover {
   background: var(--button-c1);
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .left-div {
+    gap: 30px;
+  }
+
+  .thermometer-container {
+    height: 550px;
+    width: fit-content;
+    padding: 5px 40px 5px 5px;
+  }
+
+  .thermometer-glass {
+    width: 50px;
+    height: 545px;
+  }
+
+  .mercury-tube {
+    position: absolute;
+    bottom: 12%;
+    left: 0;
+    width: 100%;
+    height: calc((100% - 12%) * var(--fill-percent, 0));
+  }
+
+  .mercury-bulb {
+    bottom: -7px;
+    left: -28px;
+    width: 85px;
+    height: 85px;
+  }
+
+  .calculator-div {
+    height: 550px;
+    width: 400px;
+    min-height: 550px;
+    min-width: 350px;
+    max-height: 550px;
+    max-width: 350px;
+  }
+
+  .calculator-upper-div {
+    width: calc(100% - 24px);
+    padding: 12px;
+  }
+  
+  .calculator-title h1 {
+    font-size: 22px;
+  }
+
+  .calculator-input-screen {
+    height: 60px;
+    font-size: 14px;
+  }
+
+  .calculator-output-div {
+    height: 40px;
+    gap: 8px;
+  }
+
+  .output-div {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .calculator-buttons-grid {
+    gap: 8px;
+  }
+
+  .calculator-button {
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .calculate-button {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .double {
+    grid-row: span 2;
+    height: auto; 
+  }
+
+  .right-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 350px;
+    z-index: 1000;
+  }
+
+  .button-div {
+    gap: 12px;
+    height: 550px;
+    width: fit-content;
+  }
+
+  .side-button {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .history-header h3 {
+    font-size: 14px;
+  }
+
+  .history-clear-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .history-item {
+    padding: 8px;
+  }
+
+  .history-input {
+    font-size: 11px;
+  }
+
+  .history-result {
+    font-size: 14px;
+  }
+
+  .history-time {
+    font-size: 8px;
+  }
+  }
+
+/* Mobile Landscape (600px and below) */
+@media (max-width: 600px) {
+  .background {
+    overflow: auto;
+  }
+
+  .left-div {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .thermometer-container {
+    display: none;
+  }
+
+  .thermometer-glass {
+    width: 40px;
+    height: 180px;
+  }
+
+  .mercury-bulb {
+    bottom: -8px;
+    left: -40px;
+    width: 90px;
+    height: 90px;
+  }
+
+  .calculator-div {
+    height: 585px;
+    width: 340px;
+    min-height: 585px;
+    min-width: 340px;
+    max-height: 585px;
+    max-width: 340px;
+  }
+
+  .button-div {
+    display: flex;
+    flex-direction: column;
+    justify-content:  flex-start;
+    height: 585px;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .right-div {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    z-index: 100;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+  }
 }

@@ -15,6 +15,7 @@ function App() {
     theme,
     history,
     showHistory,
+    isClosing,
     appendToInput,
     clearInput,
     deleteLastChar,
@@ -67,6 +68,51 @@ function App() {
       <div className="div-container"
         style={{ backgroundColor: getBgColor(celsius, theme) }}
       >
+
+        {showHistory && (
+          <div className="right-div"
+            className={`right-div ${isClosing ? 'closing' : ''}`}
+            style={{ backgroundColor: getSideBgColor(celsius, theme) }}>
+            <div className="history-container">
+              <div className="history-header">
+                <h3>History</h3>
+                <button 
+                  className="history-clear-btn"
+                  onClick={clearHistory}
+                  title="Clear all history"
+                >
+                  <BsTrash /> Clear All
+                </button>
+              </div>
+              
+              <div className="history-list">
+                {history.length === 0 ? (
+                  <div className="history-empty">
+                    <p>No calculations yet</p>
+                    <p className="history-empty-sub">Enter a temperature and click Calculate</p>
+                  </div>
+                ) : (
+                  history.map((item) => (
+                    <div 
+                      key={item.id} 
+                      className="history-item"
+                      style={{ backgroundColor: getBgColor(celsius, theme) }}
+                      onClick={() => handleInput(item.input)}
+                    >
+                      <div className="history-input">{item.input}</div>
+                      <div className="history-result">= {item.result}</div>
+                      <div className="history-time">
+                        <span>{item.date}</span>
+                        <span>{item.timestamp}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="left-div">
           <div className="thermometer-container">
             <div className="thermometer-glass"
@@ -166,48 +212,7 @@ function App() {
           </div>
         </div>
 
-        {showHistory && (
-          <div className="right-div"
-            style={{ backgroundColor: getSideBgColor(celsius, theme) }}>
-            <div className="history-container">
-              <div className="history-header">
-                <h3>History</h3>
-                <button 
-                  className="history-clear-btn"
-                  onClick={clearHistory}
-                  title="Clear all history"
-                >
-                  <BsTrash /> Clear All
-                </button>
-              </div>
-              
-              <div className="history-list">
-                {history.length === 0 ? (
-                  <div className="history-empty">
-                    <p>No calculations yet</p>
-                    <p className="history-empty-sub">Enter a temperature and click Calculate</p>
-                  </div>
-                ) : (
-                  history.map((item) => (
-                    <div 
-                      key={item.id} 
-                      className="history-item"
-                      style={{ backgroundColor: getBgColor(celsius, theme) }}
-                      onClick={() => handleInput(item.input)}
-                    >
-                      <div className="history-input">{item.input}</div>
-                      <div className="history-result">= {item.result}</div>
-                      <div className="history-time">
-                        <span>{item.date}</span>
-                        <span>{item.timestamp}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+        
       </div>
     </div>
   );

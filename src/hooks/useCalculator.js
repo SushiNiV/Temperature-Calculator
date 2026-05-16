@@ -31,6 +31,7 @@ export const useCalculator = () => {
   const [shouldReplace, setShouldReplace] = useState(false);
 
   const [showHistory, setShowHistory] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   // wrapper functions to pass dependencies
   const toCelsiusWrapper = useCallback((value, unit) => toCelsius(value, unit), []);
@@ -175,8 +176,16 @@ export const useCalculator = () => {
   }, [theme]);
 
   const toggleHistory = useCallback(() => {
-    setShowHistory(prev => !prev);
-  }, []);
+    if (showHistory) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setShowHistory(false);
+        setIsClosing(false);
+      }, 300);
+    } else {
+      setShowHistory(true);
+    }
+  }, [showHistory]);
 
   // keyboard handler
   useEffect(() => {
@@ -228,6 +237,7 @@ export const useCalculator = () => {
     history,
     shouldReplace,
     showHistory,
+    isClosing,
     // actions
     appendToInput,
     clearInput,

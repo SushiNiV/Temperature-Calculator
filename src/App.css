@@ -386,6 +386,21 @@ h1, p, span {
   color: var(--text-primary);
 }
 
+.right-div {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .history-container {
   display: flex;
   flex-direction: column;

@@ -30,6 +30,8 @@ export const useCalculator = () => {
   const [history, setHistory] = useState([]);
   const [shouldReplace, setShouldReplace] = useState(false);
 
+  const [showHistory, setShowHistory] = useState(false);
+
   // wrapper functions to pass dependencies
   const toCelsiusWrapper = useCallback((value, unit) => toCelsius(value, unit), []);
   const fromCelsiusWrapper = useCallback((celsius, unit) => fromCelsius(celsius, unit), []);
@@ -172,6 +174,10 @@ export const useCalculator = () => {
     localStorage.setItem('theme', newTheme);
   }, [theme]);
 
+  const toggleHistory = useCallback(() => {
+    setShowHistory(prev => !prev);
+  }, []);
+
   // keyboard handler
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -221,6 +227,7 @@ export const useCalculator = () => {
     theme,
     history,
     shouldReplace,
+    showHistory,
     // actions
     appendToInput,
     clearInput,
@@ -231,6 +238,7 @@ export const useCalculator = () => {
     toggleTheme,
     clearHistory,
     addToHistory,
-    handleInput, 
+    handleInput,
+    toggleHistory,
   };
 };

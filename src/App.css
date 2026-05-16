@@ -550,12 +550,16 @@ h1, p, span {
 
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
+  .background {
+    overflow-x: scroll;
+  }
+
   .left-div {
     gap: 30px;
   }
 
   .thermometer-container {
-    height: 550px;
+    height: 540px;
     width: fit-content;
     padding: 5px 20px 5px 5px;
   }
@@ -581,11 +585,11 @@ h1, p, span {
   }
 
   .calculator-div {
-    height: 550px;
+    height: 540px;
     width: 400px;
-    min-height: 550px;
+    min-height: 540px;
     min-width: 350px;
-    max-height: 550px;
+    max-height: 540px;
     max-width: 350px;
   }
 
@@ -678,48 +682,32 @@ h1, p, span {
   .history-time {
     font-size: 8px;
   }
-  }
+}
 
-/* Mobile Landscape (600px and below) */
 @media (max-width: 600px) {
   .background {
+    overflow-x: scroll;
+  }
+
+  .div-container {
+    width: 150vw;
+  }
+}
+
+@media (max-width: 450px) {   
+  .background {
     overflow: auto;
-    padding: 0 10%;
   }
 
-  .left-div {
-    flex-direction: row;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px 0;
+  .div-container {
+    width: 100vw;
   }
 
-  .calculator-div {
-    height: 585px;
-    width: 340px;
-    min-height: 585px;
-    min-width: 340px;
-    max-height: 585px;
-    max-width: 340px;
+  .thermometer-container {
+    display: none;
   }
 
   .button-div {
-    display: flex;
-    flex-direction: column;
-    justify-content:  flex-start;
-    height: 585px;
-    gap: 12px;
-    margin-top: 8px;
-  }
-
-  .right-div {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 80%;
-    max-width: 300px;
-    height: 100vh;
-    z-index: 100;
-    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+    display: none;
   }
 }

@@ -557,7 +557,7 @@ h1, p, span {
   .thermometer-container {
     height: 550px;
     width: fit-content;
-    padding: 5px 40px 5px 5px;
+    padding: 5px 20px 5px 5px;
   }
 
   .thermometer-glass {
@@ -567,7 +567,7 @@ h1, p, span {
 
   .mercury-tube {
     position: absolute;
-    bottom: 12%;
+    bottom: 11%;
     left: 0;
     width: 100%;
     height: calc((100% - 12%) * var(--fill-percent, 0));
@@ -684,29 +684,14 @@ h1, p, span {
 @media (max-width: 600px) {
   .background {
     overflow: auto;
+    padding: 0 10%;
   }
 
   .left-div {
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
     justify-content: center;
     padding: 20px 0;
-  }
-
-  .thermometer-container {
-    display: none;
-  }
-
-  .thermometer-glass {
-    width: 40px;
-    height: 180px;
-  }
-
-  .mercury-bulb {
-    bottom: -8px;
-    left: -40px;
-    width: 90px;
-    height: 90px;
   }
 
   .calculator-div {

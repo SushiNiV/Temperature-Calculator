@@ -64,10 +64,10 @@ function App() {
   };
 
   return (
-    <div className="background">
+    <div className="background"
+      style={{ backgroundColor: getBgColor(celsius, theme) }}>
       <div className="div-container"
-        style={{ backgroundColor: getBgColor(celsius, theme) }}
-      >
+        style={{ backgroundColor: getBgColor(celsius, theme) }}>
 
         {showHistory && (
           <div className="right-div"

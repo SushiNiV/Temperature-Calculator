@@ -684,7 +684,7 @@ h1, p, span {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 550px) {
   .background {
     overflow-x: scroll;
   }
@@ -694,7 +694,7 @@ h1, p, span {
   }
 }
 
-@media (max-width: 450px) {   
+@media (max-width: 420px) {   
   .background {
     overflow: auto;
   }

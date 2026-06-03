@@ -199,7 +199,11 @@ export const useCalculator = () => {
       } else if (unitKeys.includes(e.key)) {
         e.preventDefault();
         const unit = e.key.toUpperCase();
-        appendToInput(`°${unit}`);
+        if (unit === 'K') {
+          appendToInput(unit);
+        } else {
+          appendToInput(`°${unit}`);
+        }
       } else if (e.key === 'Enter') {
         e.preventDefault();
         handleCalculate();

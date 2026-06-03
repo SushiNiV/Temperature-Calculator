@@ -179,14 +179,14 @@ function App() {
                 <button className="calculator-button c4" onClick={() => appendToInput('7')}>7</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('8')}>8</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('9')}>9</button>
-                <button className="calculator-button c5 double" onClick={() => appendToInput('-')}><span className="big">–</span></button>
+                <button className="calculator-button c5 double" onClick={() => appendToInput('-')} disabled={true} style={{cursor: 'not-allowed' }}><span className="big">–</span></button>
                 <button className="calculator-button c4" onClick={() => appendToInput('4')}>4</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('5')}>5</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('6')}>6</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('1')}>1</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('2')}>2</button>
                 <button className="calculator-button c4" onClick={() => appendToInput('3')}>3</button>
-                <button className="calculator-button c5 double" onClick={() => appendToInput('+')}><span className="big">+</span></button>
+                <button className="calculator-button c5 double" onClick={() => appendToInput('+')} disabled={true} style={{cursor: 'not-allowed' }}><span className="big">+</span></button>
                 <button className="calculator-button c1" onClick={() => appendToInput('(')}>(</button>  
                 <button className="calculator-button c4" onClick={() => appendToInput('0')}>0</button>
                 <button className="calculator-button c1" onClick={() => appendToInput(')')}>)</button>
